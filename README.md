@@ -33,7 +33,7 @@ The pipeline is implemented using [Apache Airflow](https://airflow.apache.org/) 
 ## Data Source
 
 - **Sensor**: `gt-envsense-069` (Tybee Island)
-- **API Endpoint**: [`https://api.sealevelsensors.org/v1.0/Datastreams(262)/Observations`](https://api.sealevelsensors.org)
+- **API Endpoint**: [`https://api.sealevelsensors.org/v1.0/Datastreams(262)/Observations`](https://api.sealevelsensors.org/v1.0/Datastreams(262)/Observations)
 - **Data Format**:
   ```json
     {
