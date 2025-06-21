@@ -10,7 +10,7 @@ import json
 with DAG(
     dag_id='sensor_pipeline',
     start_date=days_ago(1),
-    schedule_interval='0 */8 * * *',  # Every 8 hours at minute 0
+    schedule_interval='0 * * * *',
     catchup=False
 ) as dag:
     
@@ -28,9 +28,11 @@ with DAG(
     
     @task
     def extract_sensor_data():
-        yesterday = datetime.utcnow().date() - timedelta(days=1)
-        start_date = f"{yesterday}T00:00:00Z"
-        end_date = f"{yesterday}T23:59:59Z"
+        end_time = datetime.utcnow()
+        start_time = end_time - timedelta(hours=1)
+
+        start_date = start_time.isoformat(timespec='seconds') + "Z"
+        end_date = end_time.isoformat(timespec='seconds') + "Z"
 
         base_url = "https://api.sealevelsensors.org/v1.0/Datastreams(262)/Observations"
         url = (
@@ -44,6 +46,7 @@ with DAG(
         response.raise_for_status()
         data = response.json()
         return data
+
 
     @task
     def transform_sensor_data(response):
@@ -68,13 +71,16 @@ with DAG(
         VALUES (%s, %s)
         ON CONFLICT (timestamp) DO NOTHING;
         """
+        count = 0
         for data in sensor_data:
             postgres_hook.run(insert_query, parameters=(
                 data['timestamp'],
                 data['result']
             ))
-    
-    # Task flow
+            count += 1
+        print(f"Inserted {count} new records.")
+ 
+ 
     create = create_table()
     raw_data = extract_sensor_data()
     transformed = transform_sensor_data(raw_data)
