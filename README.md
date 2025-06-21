@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS stock_data (
 
 ---
 
-## 🤝 Acknowledgements
+## Acknowledgements
 
 - [SECOORA](https://secoora.org) for sensor infrastructure
 - [SensorThings API](https://github.com/opengeospatial/sensorthings) for standardization
