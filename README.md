@@ -25,7 +25,7 @@ The pipeline is implemented using [Apache Airflow](https://airflow.apache.org/) 
 | `transform_sensor_data()` | Converts raw JSON responses into structured tabular format. |
 | `load_data_to_postgres()` | Inserts the transformed data into a PostgreSQL database. |
 
-### diagram 
+### Pileline Architecture Diagram 
 ![Architecture Diagram](resources/Architecture.png)
 
 ---
@@ -36,10 +36,23 @@ The pipeline is implemented using [Apache Airflow](https://airflow.apache.org/) 
 - **API Endpoint**: [`https://api.sealevelsensors.org/v1.0/Datastreams(262)/Observations`](https://api.sealevelsensors.org)
 - **Data Format**:
   ```json
-  {
-    "phenomenonTime": "2025-06-19T18:25:00Z",
-    "result": 1.372
-  }
+    {
+      "@iot.selfLink": "https://api.sealevelsensors.org/v1.0/Observations(27099756)",
+      "@iot.id": 27099756,
+      "phenomenonTime": "2025-06-20T23:06:29.345927Z",
+      "resultTime": "2025-06-20T23:06:29.345927Z",
+      "result": -2.924,
+      "parameters": {
+        "gateways": [
+          {
+            "snr": 8,
+            "name": "gatech-coastal-108",
+            "rssi": -98
+          }
+        ],
+        "gateway_count": 1
+      }
+    }
   ```
 
 ---
