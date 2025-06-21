@@ -10,7 +10,7 @@ import json
 with DAG(
     dag_id='sensor_pipeline',
     start_date=days_ago(1),
-    schedule_interval='@daily',
+    schedule_interval='0 */8 * * *',  # Every 8 hours at minute 0
     catchup=False
 ) as dag:
     
